@@ -70,7 +70,7 @@ namespace GenshinImpactMovementSystem
 
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
-            stateMachine.ChangeState(stateMachine.MediumStoppingState);
+            stateMachine.ChangeState(stateMachine.IdlingState);
 
             base.OnMovementCanceled(context);
         }

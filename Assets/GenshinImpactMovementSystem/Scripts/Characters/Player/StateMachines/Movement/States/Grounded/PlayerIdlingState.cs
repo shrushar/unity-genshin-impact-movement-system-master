@@ -11,6 +11,7 @@ namespace GenshinImpactMovementSystem
         public override void Enter()
         {
             stateMachine.ReusableData.MovementSpeedModifier = 0f;
+            ResetVelocity();
 
             stateMachine.ReusableData.BackwardsCameraRecenteringData = groundedData.IdleData.BackwardsCameraRecenteringData;
 
@@ -20,7 +21,6 @@ namespace GenshinImpactMovementSystem
 
             stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StationaryForce;
 
-            ResetVelocity();
         }
 
         public override void Exit()
@@ -52,6 +52,10 @@ namespace GenshinImpactMovementSystem
             }
 
             ResetVelocity();
+        }
+        protected override void OnContactWithGroundExited(Collider collider)
+        {
+
         }
     }
 }

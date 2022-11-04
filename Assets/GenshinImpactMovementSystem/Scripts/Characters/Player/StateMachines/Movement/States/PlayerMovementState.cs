@@ -168,8 +168,7 @@ namespace GenshinImpactMovementSystem
             Vector3 targetRotationDirection = GetTargetRotationDirection(targetRotationYAngle);
             targetRotationDirection = new Vector3(targetRotationDirection.x, stateMachine.ReusableData.CurrentVerticalVelocity.y, targetRotationDirection.z);
             
-            //stateMachine.Player.Rigidbody.velocity = horizontalVelocity;
-            //stateMachine.Player.Rigidbody.AddForce(targetRotationDirection * movementSpeed - currentPlayerHorizontalVelocity, ForceMode.VelocityChange);
+            
             stateMachine.Player.Rigidbody.velocity = new Vector3 (targetRotationDirection.x * movementSpeed, stateMachine.ReusableData.CurrentVerticalVelocity.y, targetRotationDirection.z*movementSpeed);
         }
 
@@ -286,7 +285,7 @@ namespace GenshinImpactMovementSystem
 
         protected virtual void OnContactWithGround(Collider collider)
         {
-            
+            stateMachine.Player.Rigidbody.velocity = new Vector3 (stateMachine.Player.Rigidbody.velocity.x, 0f, stateMachine.Player.Rigidbody.velocity.z);
         }
 
         protected virtual void OnContactWithGroundExited(Collider collider)

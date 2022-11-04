@@ -24,7 +24,7 @@ namespace GenshinImpactMovementSystem
         {
             ColliderCenterInLocalSpace = Collider.center;
 
-            ColliderVerticalExtents = new Vector3(0f, Collider.bounds.extents.y, 0f);
+            ColliderVerticalExtents = new Vector3(0f, Collider.bounds.extents.y+0.01f, 0f);
         }
     }
 }

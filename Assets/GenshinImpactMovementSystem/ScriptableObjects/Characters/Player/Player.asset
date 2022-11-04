@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Player
   m_EditorClassIdentifier: 
   <GroundedData>k__BackingField:
-    <BaseSpeed>k__BackingField: 5.08
+    <BaseSpeed>k__BackingField: 5
     <Acceleration>k__BackingField: 80.1
-    <GroundToFallRayDistance>k__BackingField: 1
+    <GroundToFallRayDistance>k__BackingField: 0.3
     <SlopeSpeedAngles>k__BackingField:
       serializedVersion: 2
       m_Curve:
@@ -95,7 +95,32 @@ MonoBehaviour:
         <TargetRotationReachTime>k__BackingField: {x: 0, y: 0.02, z: 0}
       <TimeToBeConsideredConsecutive>k__BackingField: 1
       <ConsecutiveDashesLimitAmount>k__BackingField: 2
-      <DashLimitReachedCooldown>k__BackingField: 1.75
+      <DashLimitReachedCooldown>k__BackingField: 2
+      <DashAcceleration>k__BackingField:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      <DashBuffer>k__BackingField: 0.5
     <WalkData>k__BackingField:
       <SpeedModifier>k__BackingField: 0.225
       <BackwardsCameraRecenteringData>k__BackingField:
@@ -117,7 +142,7 @@ MonoBehaviour:
       <SpeedModifier>k__BackingField: 1
   <AirborneData>k__BackingField:
     <JumpData>k__BackingField:
-      <JumpToGroundRayDistance>k__BackingField: 0.21
+      <JumpToGroundRayDistance>k__BackingField: 0.3
       <JumpForceModifierOnSlopeUpwards>k__BackingField:
         serializedVersion: 2
         m_Curve:
@@ -242,8 +267,10 @@ MonoBehaviour:
       <MediumForce>k__BackingField: {x: 0, y: 0, z: 0}
       <StrongForce>k__BackingField: {x: 0, y: 0, z: 0}
       <DecelerationForce>k__BackingField: 0
-      <jumpHeight>k__BackingField: 8
+      <JumpsCount>k__BackingField: 2
+      <jumpHeight>k__BackingField: 10
       <jumpBuffer>k__BackingField: 0.2
+      <canMove>k__BackingField: 0
     <FallData>k__BackingField:
       <FallSpeedLimit>k__BackingField: 10
       <MinimumDistanceToBeConsideredHardFall>k__BackingField: 100

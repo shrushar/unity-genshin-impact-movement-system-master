@@ -8,9 +8,15 @@ namespace GenshinImpactMovementSystem
     {
         private float startTime;
 
+        private float dashBuffer;
+        private float dashBufferEvalute;
+
+
         private int consecutiveDashesUsed;
 
         private bool shouldKeepRotating;
+        private bool iCanFall;
+
 
         public PlayerDashingState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
@@ -21,19 +27,22 @@ namespace GenshinImpactMovementSystem
             stateMachine.ReusableData.MovementSpeedModifier = groundedData.DashData.SpeedModifier;
 
             base.Enter();
+            iCanFall = false;
+
+            dashBuffer = groundedData.DashData.DashBuffer;
+            dashBufferEvalute = 0f;
 
             StartAnimation(stateMachine.Player.AnimationData.DashParameterHash);
 
-            stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
+            //stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.StrongForce;
 
             stateMachine.ReusableData.RotationData = groundedData.DashData.RotationData;
 
             Dash();
-
+            
             shouldKeepRotating = stateMachine.ReusableData.MovementInput != Vector2.zero;
 
             UpdateConsecutiveDashes();
-
             startTime = Time.time;
         }
 
@@ -60,9 +69,11 @@ namespace GenshinImpactMovementSystem
 
         public override void OnAnimationTransitionEvent()
         {
+            iCanFall = true;
+            
             if (stateMachine.ReusableData.MovementInput == Vector2.zero)
             {
-                stateMachine.ChangeState(stateMachine.HardStoppingState);
+                stateMachine.ChangeState(stateMachine.LightStoppingState);
 
                 return;
             }
@@ -107,8 +118,9 @@ namespace GenshinImpactMovementSystem
 
                 dashDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
             }
-
-            stateMachine.Player.Rigidbody.velocity = dashDirection * GetMovementSpeed(false);
+            dashBufferEvalute += Time.deltaTime / dashBuffer;
+            float movementSpeed = GetMovementSpeed(false) * stateMachine.Player.Data.GroundedData.DashData.DashAcceleration.Evaluate(dashBuffer);
+            stateMachine.Player.Rigidbody.velocity = dashDirection * movementSpeed;
         }
 
         private void UpdateConsecutiveDashes()
@@ -133,8 +145,28 @@ namespace GenshinImpactMovementSystem
             return Time.time < startTime + groundedData.DashData.TimeToBeConsideredConsecutive;
         }
 
-        /*protected override void OnDashStarted(InputAction.CallbackContext context)
+        protected override void OnDashStarted(InputAction.CallbackContext context)
         {
+        }
+        /*protected override void OnContactWithGroundExited(Collider collider)
+        {
+                     
         }*/
+
+        private bool IsThereGroundUnderneath()
+        {
+            if (iCanFall)
+            {
+                return true;
+            }
+                PlayerTriggerColliderData triggerColliderData = stateMachine.Player.ResizableCapsuleCollider.TriggerColliderData;
+
+                Vector3 groundColliderCenterInWorldSpace = triggerColliderData.GroundCheckCollider.bounds.center;
+
+                Collider[] overlappedGroundColliders = Physics.OverlapBox(groundColliderCenterInWorldSpace, triggerColliderData.GroundCheckColliderVerticalExtents, triggerColliderData.GroundCheckCollider.transform.rotation, stateMachine.Player.LayerData.GroundLayer, QueryTriggerInteraction.Ignore);
+
+                return overlappedGroundColliders.Length > 0;
+           
+        }
     }
 }

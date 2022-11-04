@@ -239,7 +239,7 @@ namespace GenshinImpactMovementSystem
                     ""name"": """",
                     ""id"": ""ef7c923b-bc76-4e1f-816b-2a555e093e49"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": ""Press(pressPoint=0.8,behavior=2)"",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",

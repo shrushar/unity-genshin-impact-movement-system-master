@@ -11,6 +11,8 @@ namespace GenshinImpactMovementSystem
             base.Enter();
 
             StartAnimation(stateMachine.Player.AnimationData.LandingParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
+            ResetVelocity();
 
             DisableCameraRecentering();
         }

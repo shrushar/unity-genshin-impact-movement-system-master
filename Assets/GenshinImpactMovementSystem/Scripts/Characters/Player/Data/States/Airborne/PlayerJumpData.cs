@@ -18,7 +18,11 @@ namespace GenshinImpactMovementSystem
         [field: SerializeField] public Vector3 StrongForce { get; private set; }
         [field: SerializeField] [field: Range(0f, 10f)] public float DecelerationForce { get; private set; } = 1.5f;
 
+        [field: SerializeField][field: Range(1, 3)] public int JumpsCount { get; private set; } = 2;
+
         [field: SerializeField] public float jumpHeight { get; private set; } = 2f;
         [field: SerializeField] public float jumpBuffer { get; private set; } = 2f;
+
+        [field: SerializeField] public bool canMove { get; set; } = false;
     }
 }
