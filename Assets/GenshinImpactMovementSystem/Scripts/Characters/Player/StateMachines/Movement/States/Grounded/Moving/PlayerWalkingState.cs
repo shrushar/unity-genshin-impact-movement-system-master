@@ -18,7 +18,7 @@ namespace GenshinImpactMovementSystem
 
             StartAnimation(stateMachine.Player.AnimationData.WalkParameterHash);
 
-            stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.WeakForce;
+            //stateMachine.ReusableData.CurrentJumpForce = airborneData.JumpData.WeakForce;
         }
 
         public override void Exit()
@@ -39,7 +39,7 @@ namespace GenshinImpactMovementSystem
 
         protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
-            stateMachine.ChangeState(stateMachine.LightStoppingState);
+            stateMachine.ChangeState(stateMachine.IdlingState);
 
             base.OnMovementCanceled(context);
         }

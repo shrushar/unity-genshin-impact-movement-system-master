@@ -74,7 +74,7 @@ namespace GenshinImpactMovementSystem
             if (GetMovementInputDirection() == Vector3.zero || characterJumpInformation.canMove)
             {
                 
-                lastVelocity = new Vector3 (lastVelocity.x/2, lastVelocity.y, lastVelocity.z/2);
+                lastVelocity = new Vector3 (lastVelocity.x/3, lastVelocity.y, lastVelocity.z/3);
             }
             if (lastVelocity.y > -airborneData.FallData.FallSpeedLimit)
                 gravity = Vector3.down * stateMachine.Player.Data.AirborneData.FallData.Gravity * stateMachine.Player.Data.AirborneData.FallData.GravityMultiplayer * Time.deltaTime;

@@ -405,6 +405,7 @@ namespace GenshinImpactMovementSystem
         {
             return GetPlayerVerticalVelocity().y < -minimumVelocity;
         }
+
         #endregion
     }
 

@@ -267,7 +267,7 @@ MonoBehaviour:
       <MediumForce>k__BackingField: {x: 0, y: 0, z: 0}
       <StrongForce>k__BackingField: {x: 0, y: 0, z: 0}
       <DecelerationForce>k__BackingField: 0
-      <JumpsCount>k__BackingField: 2
+      <JumpsCount>k__BackingField: 3
       <jumpHeight>k__BackingField: 10
       <jumpBuffer>k__BackingField: 0.2
       <canMove>k__BackingField: 0

@@ -18,6 +18,8 @@ namespace GenshinImpactMovementSystem
             cinemachinePOV = VirtualCamera.GetCinemachineComponent<CinemachinePOV>();
         }
 
+        
+
         public void EnableRecentering(float waitTime = -1f, float recenteringTime = -1f, float baseMovementSpeed = 1f, float movementSpeed = 1f)
         {
             cinemachinePOV.m_HorizontalRecentering.m_enabled = true;
@@ -43,6 +45,12 @@ namespace GenshinImpactMovementSystem
         public void DisableRecentering()
         {
             cinemachinePOV.m_HorizontalRecentering.m_enabled = false;
+        }
+
+        
+        public void FollowTarget()
+        {
+           
         }
     }
 }

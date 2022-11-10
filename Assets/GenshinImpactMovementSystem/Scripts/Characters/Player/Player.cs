@@ -14,6 +14,7 @@ namespace GenshinImpactMovementSystem
 
         [field: Header("Camera")]
         [field: SerializeField] public PlayerCameraRecenteringUtility CameraRecenteringUtility { get; private set; }
+        [field: SerializeField] public PlayerCameraRecenteringUtility CameraTargetRecenteringUtility { get; private set; }
 
         [field: Header("Animations")]
         [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
@@ -27,6 +28,7 @@ namespace GenshinImpactMovementSystem
         public Transform MainCameraTransform { get; private set; }
 
         private PlayerMovementStateMachine movementStateMachine;
+        private PlayerCombatStateMachine combatStateMachine;
 
         private void Awake()
         {
@@ -42,11 +44,13 @@ namespace GenshinImpactMovementSystem
             MainCameraTransform = Camera.main.transform;
 
             movementStateMachine = new PlayerMovementStateMachine(this);
+            combatStateMachine = new PlayerCombatStateMachine(this);
         }
 
         private void Start()
         {
             movementStateMachine.ChangeState(movementStateMachine.IdlingState);
+            combatStateMachine.ChangeState(combatStateMachine.CombatState);
         }
 
         private void Update()

@@ -100,6 +100,15 @@ namespace GenshinImpactMovementSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LookOnTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""82a55c22-cab0-422d-abc6-38c2a5cb808e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -256,6 +265,17 @@ namespace GenshinImpactMovementSystem
                     ""action"": ""CursorToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d18219d-bb7c-4fe7-a76a-f21eca07c383"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LookOnTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -272,6 +292,7 @@ namespace GenshinImpactMovementSystem
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_CursorToggle = m_Player.FindAction("CursorToggle", throwIfNotFound: true);
+            m_Player_LookOnTarget = m_Player.FindAction("LookOnTarget", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -339,6 +360,7 @@ namespace GenshinImpactMovementSystem
         private readonly InputAction m_Player_Sprint;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_CursorToggle;
+        private readonly InputAction m_Player_LookOnTarget;
         public struct PlayerActions
         {
             private @PlayerInputActions m_Wrapper;
@@ -351,6 +373,7 @@ namespace GenshinImpactMovementSystem
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @CursorToggle => m_Wrapper.m_Player_CursorToggle;
+            public InputAction @LookOnTarget => m_Wrapper.m_Player_LookOnTarget;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -384,6 +407,9 @@ namespace GenshinImpactMovementSystem
                     @CursorToggle.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCursorToggle;
                     @CursorToggle.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCursorToggle;
                     @CursorToggle.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCursorToggle;
+                    @LookOnTarget.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookOnTarget;
+                    @LookOnTarget.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookOnTarget;
+                    @LookOnTarget.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLookOnTarget;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -412,6 +438,9 @@ namespace GenshinImpactMovementSystem
                     @CursorToggle.started += instance.OnCursorToggle;
                     @CursorToggle.performed += instance.OnCursorToggle;
                     @CursorToggle.canceled += instance.OnCursorToggle;
+                    @LookOnTarget.started += instance.OnLookOnTarget;
+                    @LookOnTarget.performed += instance.OnLookOnTarget;
+                    @LookOnTarget.canceled += instance.OnLookOnTarget;
                 }
             }
         }
@@ -426,6 +455,7 @@ namespace GenshinImpactMovementSystem
             void OnSprint(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnCursorToggle(InputAction.CallbackContext context);
+            void OnLookOnTarget(InputAction.CallbackContext context);
         }
     }
 }

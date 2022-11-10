@@ -31,6 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.4, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7522247112809039681}
   m_Father: {fileID: 0}
@@ -87,6 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerIndex: -1
+  AutoEnableInputs: 1
   XYAxis: {fileID: -5159529682735536763, guid: 01d4947ae43b83e43bd641ff3cf71d8f, type: 3}
   ZAxis: {fileID: -7446500733957500528, guid: 01d4947ae43b83e43bd641ff3cf71d8f, type: 3}
 --- !u!114 &7522247111663242663
@@ -183,6 +185,7 @@ Transform:
   m_LocalRotation: {x: -0.0020006734, y: -0.9826372, z: 0.1852228, w: 0.010614179}
   m_LocalPosition: {x: 0, y: 0, z: 4.0891047}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7522247111663242657}
   m_RootOrder: 0

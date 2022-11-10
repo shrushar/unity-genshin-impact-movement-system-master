@@ -84,7 +84,6 @@ namespace GenshinImpactMovementSystem
             
             
             ++jumpQue;
-            Debug.Log(jumpQue);
             if(jumpQue < jumpQueueLimit)
             {
                 
