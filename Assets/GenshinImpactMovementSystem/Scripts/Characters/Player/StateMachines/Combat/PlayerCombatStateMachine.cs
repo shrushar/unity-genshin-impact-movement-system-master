@@ -15,6 +15,10 @@ namespace GenshinImpactMovementSystem
         public PlayerCombatState CombatState { get; }
 
         public PlayerToggledState ToggledState { get; }
+
+        public PlayerInteractiveAnimationTrigger InteractiveAnimation { get; }
+
+        //Data
         public PlayerCombatStateMachine(Player player)
         {
             Player = player;
@@ -22,7 +26,10 @@ namespace GenshinImpactMovementSystem
             ToggleStateMachine = new PlayerToggleStateMachine(this);
 
             CombatState = new PlayerCombatState(this);         
-            ToggledState = new PlayerToggledState(this);    
+            ToggledState = new PlayerToggledState(this);
+
+            InteractiveAnimation = new PlayerInteractiveAnimationTrigger(this);
+           
         }
     }
 }

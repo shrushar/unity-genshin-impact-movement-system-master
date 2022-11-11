@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace GenshinImpactMovementSystem
 {
@@ -18,6 +19,12 @@ namespace GenshinImpactMovementSystem
 
         [field: Header("Animations")]
         [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
+
+        [field: SerializeField] public InteractiveAnimationData interctiveAnimationData { get; private set; }
+
+        
+        public Rig targetFollowTrigger { get; private set; }
+
 
         public Rigidbody Rigidbody { get; private set; }
         public Animator Animator { get; private set; }
@@ -41,10 +48,17 @@ namespace GenshinImpactMovementSystem
             Input = GetComponent<PlayerInput>();
             ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
 
+            targetFollowTrigger = interctiveAnimationData.TargetFollowTrigger.GetComponent<Rig>();
+            targetFollowTrigger.weight = 0;
+
+            Debug.Log(targetFollowTrigger);
+
             MainCameraTransform = Camera.main.transform;
 
             movementStateMachine = new PlayerMovementStateMachine(this);
             combatStateMachine = new PlayerCombatStateMachine(this);
+
+            
         }
 
         private void Start()
@@ -57,12 +71,15 @@ namespace GenshinImpactMovementSystem
         {
             movementStateMachine.HandleInput();
 
+
             movementStateMachine.Update();
+            combatStateMachine.Update();
         }
 
         private void FixedUpdate()
         {
             movementStateMachine.PhysicsUpdate();
+            combatStateMachine.PhysicsUpdate();
         }
 
         private void OnTriggerEnter(Collider collider)

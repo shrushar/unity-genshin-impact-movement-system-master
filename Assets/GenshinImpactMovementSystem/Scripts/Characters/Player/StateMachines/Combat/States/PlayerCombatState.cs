@@ -13,10 +13,12 @@ namespace GenshinImpactMovementSystem
         {
             
             stateMachine = playerCombatStateMachine;
+            
         }
         public virtual void Enter()
         {
             Debug.Log("StartCombat");
+            
             AddInputActionsCallbacks();
         }
 
@@ -25,7 +27,10 @@ namespace GenshinImpactMovementSystem
             Debug.Log("StopCombat");
             RemoveInputActionsCallbacks();
         }
+        public virtual void Update()
+        {
 
+        }
         public void HandleInput()
         {
             throw new System.NotImplementedException();
@@ -58,7 +63,7 @@ namespace GenshinImpactMovementSystem
 
         public virtual void PhysicsUpdate()
         {
-            throw new System.NotImplementedException();
+            
         }
 
 
@@ -88,9 +93,5 @@ namespace GenshinImpactMovementSystem
 
         
         
-        void IState.Update()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

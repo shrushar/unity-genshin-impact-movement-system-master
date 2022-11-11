@@ -1,21 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 namespace GenshinImpactMovementSystem
 {
-    public class PlayerInteractiveAnimationTrigger : MonoBehaviour
+    public class PlayerInteractiveAnimationTrigger : PlayerCombatState
     {
-        // Start is called before the first frame update
-        void Start()
+        public Rig rig;
+        private float targetWeight = 1;
+
+        public PlayerInteractiveAnimationTrigger(PlayerCombatStateMachine playerCombatStateMachine) :base(playerCombatStateMachine)
         {
-        
+            
         }
 
-        // Update is called once per frame
-        void Update()
+    
+        public void ManualUpdate(Rig rig)
         {
-        
+            rig.weight = Mathf.Lerp(rig.weight, targetWeight, Time.deltaTime * 10f);
+            
         }
+
+        public void HardSet(Rig rig, bool flag)
+        {
+            if (flag)
+                targetWeight = 1f;
+            else
+                targetWeight = 0f;
+        }
+        
     }
 }
