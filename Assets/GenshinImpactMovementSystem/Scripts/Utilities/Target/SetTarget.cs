@@ -16,7 +16,7 @@ namespace GenshinImpactMovementSystem
         public void AddTarget(GameObject targetToFollow)
         {
 
-            Debug.Log(targetToFollow == null);
+            
             if(targetToFollow != null)
             {
                 gameObject.transform.position = targetToFollow.transform.position;

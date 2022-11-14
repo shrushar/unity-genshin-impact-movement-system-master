@@ -31,7 +31,7 @@ namespace GenshinImpactMovementSystem
                         minDist = dist;
                     }
                 }
-                Debug.Log(theNearestTarget == null);
+                
             
             return theNearestTarget;
         }

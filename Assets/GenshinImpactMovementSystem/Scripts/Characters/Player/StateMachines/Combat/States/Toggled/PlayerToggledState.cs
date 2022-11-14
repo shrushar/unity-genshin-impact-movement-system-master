@@ -28,8 +28,8 @@ namespace GenshinImpactMovementSystem
             targetCamera.VirtualCamera.Priority = 11;
             stateMachine.InteractiveAnimation.HardSet(stateMachine.Player.targetFollowTrigger, true);
             stateMachine.InteractiveAnimation.ManualUpdate(stateMachine.Player.targetFollowTrigger);
-            
-            stateMachine.Player.setTarget.AddTarget(findTheNearestTarget.FindNearest(stateMachine.Player.targets, stateMachine.Player.transform.position));
+            Target = findTheNearestTarget.FindNearest(stateMachine.Player.targets, stateMachine.Player.transform.position);
+            stateMachine.Player.setTarget.AddTarget(Target);
             //Debug.Log(enemies.Count);
             //findTheNearestTarget.FindNearest(enemies, stateMachine.Player.transform.position);
 
@@ -68,13 +68,10 @@ namespace GenshinImpactMovementSystem
         protected override void AddInputActionsCallbacks()
         {
             base.AddInputActionsCallbacks();
-            //stateMachine.Player.Input.PlayerActions.Dash.started += Dash_started;
+            stateMachine.Player.Input.PlayerActions.DashToTarget.started += DashToTarget_started;
         }
 
-        private void Dash_started(InputAction.CallbackContext context)
-        {
-            //stateMachine.ChangeState(stateMachine.TeleportState);
-        }
+        
 
         protected override void LookOnTargetCanceled(InputAction.CallbackContext context)
         {

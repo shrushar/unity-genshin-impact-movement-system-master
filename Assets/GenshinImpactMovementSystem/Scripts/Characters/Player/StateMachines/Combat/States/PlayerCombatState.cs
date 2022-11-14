@@ -10,6 +10,8 @@ namespace GenshinImpactMovementSystem
         public PlayerCombatStateMachine stateMachine;
         public FindTheNearestTarget findTheNearestTarget;
 
+        public GameObject Target;
+
         
         public PlayerCombatState(PlayerCombatStateMachine playerCombatStateMachine)
         {
@@ -20,14 +22,14 @@ namespace GenshinImpactMovementSystem
         }
         public virtual void Enter()
         {
-            Debug.Log("StartCombat");
+            
             
             AddInputActionsCallbacks();
         }
 
         public virtual void Exit()
         {
-            Debug.Log("StopCombat");
+            
             RemoveInputActionsCallbacks();
         }
         public virtual void Update()
@@ -96,11 +98,16 @@ namespace GenshinImpactMovementSystem
             PlayerCameraRecenteringUtility targetCamera = stateMachine.Player.CameraTargetRecenteringUtility;
             targetCamera.VirtualCamera.Priority = 1;
         }
-
+        
+        public void DashToTarget_started(InputAction.CallbackContext context)
+        {
+            stateMachine.ChangeState(stateMachine.TeleportState);
+        }
         protected virtual void RemoveInputActionsCallbacks()
         {
             stateMachine.Player.Input.PlayerActions.LookOnTarget.started -= OnLookOnTarget;
             stateMachine.Player.Input.PlayerActions.LookOnTarget.canceled -= LookOnTargetCanceled;
+            stateMachine.Player.Input.PlayerActions.DashToTarget.started -= DashToTarget_started;
         }
 
         protected virtual void OnLookOnTarget(InputAction.CallbackContext context)
