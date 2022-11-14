@@ -48,23 +48,6 @@ namespace GenshinImpactMovementSystem
             base.PhysicsUpdate();
             stateMachine.Player.Rigidbody.velocity = UpdateJump();
         }
-        /*private Vector3 JumpUpdate()
-        {
-            Vector3 gravity = Vector3.zero;
-            
-            Vector3 lastVelocity = stateMachine.Player.Rigidbody.velocity;
-            if(lastVelocity.y >= -airborneData.FallData.FallSpeedLimit)
-                gravity = Vector3.down * stateMachine.Player.Data.AirborneData.FallData.Gravity * stateMachine.Player.Data.AirborneData.FallData.GravityMultiplayer * Time.deltaTime;
-            else 
-                return new Vector3(lastVelocity.x, -airborneData.FallData.FallSpeedLimit, lastVelocity.y);
-          
-            Vector3 verticalVelocity = new Vector3(lastVelocity.x, lastVelocity.y + gravity.y, lastVelocity.z) ;
-            if(GetMovementInputDirection() == Vector3.zero)
-                    verticalVelocity = new Vector3(0f, lastVelocity.y, 0f) ;
-
-            stateMachine.ReusableData.CurrentVerticalVelocity = verticalVelocity;
-            return verticalVelocity;
-        }*/
         private Vector3 UpdateJump()
         {
             Vector3 gravity = Vector3.zero;

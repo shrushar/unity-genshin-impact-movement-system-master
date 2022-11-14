@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -34,6 +35,11 @@ namespace GenshinImpactMovementSystem
 
         public Transform MainCameraTransform { get; private set; }
 
+        [field: SerializeField] public GameObject targetPivot { get; private set; }
+        public SetTarget setTarget { get; private set; }
+        public List<GameObject> targets = new List<GameObject>();
+
+
         private PlayerMovementStateMachine movementStateMachine;
         private PlayerCombatStateMachine combatStateMachine;
 
@@ -44,14 +50,17 @@ namespace GenshinImpactMovementSystem
 
             Rigidbody = GetComponent<Rigidbody>();
             Animator = GetComponentInChildren<Animator>();
+            
 
             Input = GetComponent<PlayerInput>();
             ResizableCapsuleCollider = GetComponent<PlayerResizableCapsuleCollider>();
 
+            
+
             targetFollowTrigger = interctiveAnimationData.TargetFollowTrigger.GetComponent<Rig>();
             targetFollowTrigger.weight = 0;
 
-            Debug.Log(targetFollowTrigger);
+            setTarget = targetPivot.GetComponent<SetTarget>();
 
             MainCameraTransform = Camera.main.transform;
 
@@ -85,13 +94,18 @@ namespace GenshinImpactMovementSystem
         private void OnTriggerEnter(Collider collider)
         {
             movementStateMachine.OnTriggerEnter(collider);
+            combatStateMachine.OnTriggerEnter(collider);
         }
 
         private void OnTriggerExit(Collider collider)
         {
             movementStateMachine.OnTriggerExit(collider);
+            combatStateMachine.OnTriggerExit(collider);
         }
-
+        private void OnTriggerStay(Collider collider)
+        {
+            //combatStateMachine.OnTriggerStay(collider);
+        }
         public void OnMovementStateAnimationEnterEvent()
         {
             movementStateMachine.OnAnimationEnterEvent();

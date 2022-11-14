@@ -49,12 +49,13 @@ namespace GenshinImpactMovementSystem
 
         public virtual void OnTriggerEnter(Collider collider)
         {
-            if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
-            {
-                OnContactWithGround(collider);
+            
+                if (stateMachine.Player.LayerData.IsGroundLayer(collider.gameObject.layer))
+                {
+                    OnContactWithGround(collider);
 
-                return;
-            }
+                    return;
+                }
         }
 
         public virtual void OnTriggerExit(Collider collider)
@@ -404,6 +405,11 @@ namespace GenshinImpactMovementSystem
         protected bool IsMovingDown(float minimumVelocity = 0.1f)
         {
             return GetPlayerVerticalVelocity().y < -minimumVelocity;
+        }
+
+        public void OnTriggerStay(Collider collider)
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion
