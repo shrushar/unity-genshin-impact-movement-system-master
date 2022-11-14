@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - EnemyCheck
+  - GroundCheck
+  - Target
   layers:
   - Default
   - TransparentFX
@@ -29,7 +32,7 @@ TagManager:
   - 
   - Environment
   - GroundCheck
-  - 
+  - EnemyCheck
   - 
   - 
   - 

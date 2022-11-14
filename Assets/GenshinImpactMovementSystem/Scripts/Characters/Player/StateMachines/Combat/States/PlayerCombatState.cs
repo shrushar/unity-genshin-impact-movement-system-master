@@ -8,9 +8,12 @@ namespace GenshinImpactMovementSystem
     public class PlayerCombatState : IState
     {
         public PlayerCombatStateMachine stateMachine;
+        public FindTheNearestTarget findTheNearestTarget;
 
+        
         public PlayerCombatState(PlayerCombatStateMachine playerCombatStateMachine)
         {
+            findTheNearestTarget = new FindTheNearestTarget();
             
             stateMachine = playerCombatStateMachine;
             
@@ -29,7 +32,7 @@ namespace GenshinImpactMovementSystem
         }
         public virtual void Update()
         {
-
+            
         }
         public void HandleInput()
         {
@@ -53,14 +56,28 @@ namespace GenshinImpactMovementSystem
 
         public void OnTriggerEnter(Collider collider)
         {
-            throw new System.NotImplementedException();
+            
+            if (stateMachine.Player.LayerData.IsEnemyLayer(collider.gameObject.layer))
+            {
+                stateMachine.Player.targets.Add(collider.gameObject);
+
+                return;
+            }
         }
 
         public void OnTriggerExit(Collider collider)
         {
-            throw new System.NotImplementedException();
+            
+            if (stateMachine.Player.LayerData.IsEnemyLayer(collider.gameObject.layer))
+            {
+                stateMachine.Player.targets.Remove(collider.gameObject);
+                return;
+            }
         }
+        public void OnTriggerStay(Collider collider)
+        {
 
+        }
         public virtual void PhysicsUpdate()
         {
             
@@ -76,22 +93,21 @@ namespace GenshinImpactMovementSystem
 
         protected virtual void LookOnTargetCanceled(InputAction.CallbackContext context)
         {
-            
+            PlayerCameraRecenteringUtility targetCamera = stateMachine.Player.CameraTargetRecenteringUtility;
+            targetCamera.VirtualCamera.Priority = 1;
         }
 
         protected virtual void RemoveInputActionsCallbacks()
         {
             stateMachine.Player.Input.PlayerActions.LookOnTarget.started -= OnLookOnTarget;
-            stateMachine.Player.Input.PlayerActions.LookOnTarget.canceled -= OnLookOnTarget;
+            stateMachine.Player.Input.PlayerActions.LookOnTarget.canceled -= LookOnTargetCanceled;
         }
 
         protected virtual void OnLookOnTarget(InputAction.CallbackContext context)
         {
-            if(stateMachine.Player.Input.PlayerActions.LookOnTarget.IsPressed())
-                stateMachine.ChangeState(stateMachine.ToggledState);
+             if(stateMachine.Player.targets.Count != 0)
+                    stateMachine.ChangeState(stateMachine.ToggledState);
         }
 
-        
-        
     }
 }

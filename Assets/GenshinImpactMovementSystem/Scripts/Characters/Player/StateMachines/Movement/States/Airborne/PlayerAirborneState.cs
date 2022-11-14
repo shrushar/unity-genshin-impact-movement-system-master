@@ -56,6 +56,7 @@ namespace GenshinImpactMovementSystem
 
         protected override void OnContactWithGround(Collider collider)
         {
+            base.OnContactWithGround(collider);
             StopAnimation(stateMachine.Player.AnimationData.SJumpParameterHash);
             stateMachine.ChangeState(stateMachine.LightLandingState);
             jumpQue = 0;

@@ -4,18 +4,36 @@ using UnityEngine;
 
 namespace GenshinImpactMovementSystem
 {
-    public class PlayerTeleportState : MonoBehaviour
+    public class PlayerTeleportState : PlayerToggledState
     {
-        // Start is called before the first frame update
-        void Start()
+
+        public PlayerTeleportState(PlayerCombatStateMachine playerCombatStateMachine) : base(playerCombatStateMachine)
+        {
+        }
+
+       //turn to target
+       //get direction to target
+       //with a distence to a tsrget apply forse mode
+       // apply to a rigid body with forse
+        
+        public override void Exit()
+        {
+
+        }
+        // Update is called once per frame
+        public override void Update()
         {
         
         }
-
-        // Update is called once per frame
-        void Update()
+        public override void Enter()
         {
-        
+            stateMachine.Player.Input.PlayerActions.Movement.Disable();
+            base.Enter();
+
+        }
+        private void DashToTarget()
+        {
+
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 namespace GenshinImpactMovementSystem
 {
-    public class PlayerToggleStateMachine : IState
+    public class PlayerToggleStateMachine
     {
 
         
@@ -79,9 +79,6 @@ namespace GenshinImpactMovementSystem
         {
 
         }
-        void IState.Update()
-        {
-            throw new System.NotImplementedException();
-        }
+       
     }
 }
