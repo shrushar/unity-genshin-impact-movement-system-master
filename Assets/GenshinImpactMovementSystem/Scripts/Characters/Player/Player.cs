@@ -40,7 +40,7 @@ namespace GenshinImpactMovementSystem
         public List<GameObject> targets = new List<GameObject>();
 
 
-        private PlayerMovementStateMachine movementStateMachine;
+        public PlayerMovementStateMachine movementStateMachine;
         private PlayerCombatStateMachine combatStateMachine;
 
         private void Awake()

@@ -22,19 +22,19 @@ namespace GenshinImpactMovementSystem
         }
         public virtual void Enter()
         {
-            
+            Debug.Log("In Combat");
             
             AddInputActionsCallbacks();
         }
 
         public virtual void Exit()
         {
-            
+            Debug.Log("Out of Combat");
             RemoveInputActionsCallbacks();
         }
         public virtual void Update()
         {
-            
+            stateMachine.InteractiveAnimation.ManualUpdate(stateMachine.Player.targetFollowTrigger);
         }
         public void HandleInput()
         {
@@ -95,8 +95,8 @@ namespace GenshinImpactMovementSystem
 
         protected virtual void LookOnTargetCanceled(InputAction.CallbackContext context)
         {
-            PlayerCameraRecenteringUtility targetCamera = stateMachine.Player.CameraTargetRecenteringUtility;
-            targetCamera.VirtualCamera.Priority = 1;
+            /*PlayerCameraRecenteringUtility targetCamera = stateMachine.Player.CameraTargetRecenteringUtility;
+            targetCamera.VirtualCamera.Priority = 1;*/
         }
         
         public void DashToTarget_started(InputAction.CallbackContext context)
@@ -107,7 +107,6 @@ namespace GenshinImpactMovementSystem
         {
             stateMachine.Player.Input.PlayerActions.LookOnTarget.started -= OnLookOnTarget;
             stateMachine.Player.Input.PlayerActions.LookOnTarget.canceled -= LookOnTargetCanceled;
-            stateMachine.Player.Input.PlayerActions.DashToTarget.started -= DashToTarget_started;
         }
 
         protected virtual void OnLookOnTarget(InputAction.CallbackContext context)

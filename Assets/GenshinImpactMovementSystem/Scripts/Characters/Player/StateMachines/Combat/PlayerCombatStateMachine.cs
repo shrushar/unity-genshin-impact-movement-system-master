@@ -7,9 +7,10 @@ namespace GenshinImpactMovementSystem
     {
 
         public Player Player { get; }
-        
+       
+        public PlayerCombat PlayerCombat { get; }
 
-        public PlayerMovementStateMachine PlayerMovementStateMachine { get; }
+        public PlayerMovementStateMachine movementStateMachine { get; }
 
         public PlayerCombatState CombatState { get; }
 
@@ -26,6 +27,7 @@ namespace GenshinImpactMovementSystem
         {
             Player = player;
 
+            movementStateMachine = Player.movementStateMachine;
 
             CombatState = new PlayerCombatState(this);         
             ToggledState = new PlayerToggledState(this);

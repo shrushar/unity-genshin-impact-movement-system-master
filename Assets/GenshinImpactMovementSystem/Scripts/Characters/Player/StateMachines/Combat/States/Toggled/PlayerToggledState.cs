@@ -23,25 +23,24 @@ namespace GenshinImpactMovementSystem
         public override void Enter()
 
         {
-            
+            Debug.Log("Look On Target");
             targetCamera = stateMachine.Player.CameraTargetRecenteringUtility;
             targetCamera.VirtualCamera.Priority = 11;
             stateMachine.InteractiveAnimation.HardSet(stateMachine.Player.targetFollowTrigger, true);
-            stateMachine.InteractiveAnimation.ManualUpdate(stateMachine.Player.targetFollowTrigger);
             Target = findTheNearestTarget.FindNearest(stateMachine.Player.targets, stateMachine.Player.transform.position);
             stateMachine.Player.setTarget.AddTarget(Target);
-            //Debug.Log(enemies.Count);
-            //findTheNearestTarget.FindNearest(enemies, stateMachine.Player.transform.position);
+            AddInputActionsCallbacks();
 
 
 
-
-            base.Enter();
+            //ase.Enter();
         }
         public override void Exit()
         {
-            
-           
+            //base.Exit();
+            Debug.Log("Stop looking on target");
+            stateMachine.InteractiveAnimation.HardSet(stateMachine.Player.targetFollowTrigger, false);
+            RemoveInputActionsCallbacks();
             targetCamera.VirtualCamera.Priority = 1;
 
             
@@ -49,9 +48,13 @@ namespace GenshinImpactMovementSystem
         public override void Update()
         {
             base.Update();
-            stateMachine.InteractiveAnimation.ManualUpdate(stateMachine.Player.targetFollowTrigger);
+            
             if (stateMachine.Player.targets.Count == 0)
                 Exit();
+            if (!stateMachine.Player.Input.PlayerActions.LookOnTarget.IsPressed())
+                if (Target != null)
+                    stateMachine.ChangeState(stateMachine.CombatState);
+                
             //if (!stateMachine.Player.Input.PlayerActions.LookOnTarget.IsPressed())
 
 
@@ -67,17 +70,20 @@ namespace GenshinImpactMovementSystem
         }
         protected override void AddInputActionsCallbacks()
         {
-            base.AddInputActionsCallbacks();
+            //base.AddInputActionsCallbacks();
             stateMachine.Player.Input.PlayerActions.DashToTarget.started += DashToTarget_started;
         }
+        protected override void RemoveInputActionsCallbacks()
+        {
+            stateMachine.Player.Input.PlayerActions.LookOnTarget.canceled -= LookOnTargetCanceled;
+            stateMachine.Player.Input.PlayerActions.DashToTarget.started -= DashToTarget_started;
+        }
 
-        
 
         protected override void LookOnTargetCanceled(InputAction.CallbackContext context)
         {
             base.LookOnTargetCanceled(context);
             targetCamera.VirtualCamera.Priority = 1;
-            //stateMachine.Player.setTarget.RemoveTarget(target);
             stateMachine.InteractiveAnimation.HardSet(stateMachine.Player.targetFollowTrigger, false);
         }
         

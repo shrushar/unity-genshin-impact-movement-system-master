@@ -8,7 +8,7 @@ namespace GenshinImpactMovementSystem
     public class PlayerInteractiveAnimationTrigger : PlayerCombatState
     {
         public Rig rig;
-        private float targetWeight = 1;
+        private float targetWeight = 0f;
 
         public PlayerInteractiveAnimationTrigger(PlayerCombatStateMachine playerCombatStateMachine) :base(playerCombatStateMachine)
         {
@@ -19,7 +19,6 @@ namespace GenshinImpactMovementSystem
         public void ManualUpdate(Rig rig)
         {
             rig.weight = Mathf.Lerp(rig.weight, targetWeight, Time.deltaTime * 10f);
-            
         }
 
         public void HardSet(Rig rig, bool flag)
@@ -29,6 +28,6 @@ namespace GenshinImpactMovementSystem
             else
                 targetWeight = 0f;
         }
-        
+         
     }
 }
