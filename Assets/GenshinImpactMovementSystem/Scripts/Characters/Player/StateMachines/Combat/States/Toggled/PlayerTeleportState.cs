@@ -29,15 +29,26 @@ namespace GenshinImpactMovementSystem
         {
             Debug.Log("Stop teleporting");
             stateMachine.Player.Input.PlayerActions.Movement.Enable();
+            stateMachine.Player.Input.PlayerActions.Jump.Enable();
+
             stateMachine.Player.Input.PlayerActions.LookOnTarget.Enable();
+
+            StopAnimation(stateMachine.Player.AnimationData.TeleportingHash);
+
+            stateMachine.Player.movementStateMachine.ReusableData.ShouldTeleport = false;
             base.Exit();
         }
         public override void Enter()
         {
             Debug.Log("Im teleporting");
+            StopAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
+            StopAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
+            StartAnimation(stateMachine.Player.AnimationData.TeleportingHash);
+
             stateMachine.Player.Input.PlayerActions.Movement.Disable();
             stateMachine.Player.Input.PlayerActions.LookOnTarget.Disable();
-
+            stateMachine.Player.Input.PlayerActions.Jump.Disable();
+            stateMachine.Player.movementStateMachine.ReusableData.ShouldTeleport = true;
 
             bufferElypsed = 0f;
             buffer = 1f;
@@ -48,9 +59,6 @@ namespace GenshinImpactMovementSystem
         public override void Update()
         {
             stateMachine.Player.setTarget.AddTarget(Target);
-            /*bufferElypsed += Time.deltaTime;
-            if (bufferElypsed >= buffer)
-                stateMachine.ChangeState(stateMachine.CombatState);*/
             base.Update();
 
 
@@ -58,6 +66,7 @@ namespace GenshinImpactMovementSystem
         public override void PhysicsUpdate()
         {
             RotateTowardsTargetRotation();
+
             DashToTarget();
 
 
@@ -75,10 +84,10 @@ namespace GenshinImpactMovementSystem
             bool distReached = Vector3.Distance(lastPosition, stateMachine.Player.targetPivot.transform.position) < 1f;
             bool isTargetInAir = stateMachine.Player.targetPivot.transform.position.y > lastPosition.y;
 
-            Vector3 newPos = Vector3.MoveTowards(lastPosition, stateMachine.Player.targetPivot.transform.position, 5f * Time.deltaTime);
-
-            stateMachine.Player.Rigidbody.velocity = (newPos - lastPosition) / Time.deltaTime;
-            stateMachine.Player.Rigidbody.MovePosition(newPos);
+            Vector3 direction = Vector3.MoveTowards(lastPosition, stateMachine.Player.targetPivot.transform.position, 5f * Time.deltaTime);
+            //Vector3 direction = (stateMachine.Player.targetPivot.transform.position - stateMachine.Player.Rigidbody.position);
+            stateMachine.Player.Rigidbody.velocity = (direction - lastPosition) / Time.deltaTime;
+            stateMachine.Player.Rigidbody.MovePosition(direction);
             if (distReached)
                 if (isTargetInAir)
                     stateMachine.movementStateMachine.ChangeState(stateMachine.movementStateMachine.FallingState);
@@ -94,32 +103,13 @@ namespace GenshinImpactMovementSystem
             Vector3 direction = ( stateMachine.Player.targetPivot.transform.position - stateMachine.Player.Rigidbody.position);
             direction.y = 0;
             float directionYAngle = Mathf.Atan2(direction.x,direction.z)*Mathf.Rad2Deg;
-            if (directionYAngle < 0f)
-            {
-                directionYAngle += 360f;
-            }
-
-
-            // float smoothedYAngle = Mathf.SmoothDampAngle(currentYAngle, , ref stateMachine.ReusableData.DampedTargetRotationCurrentVelocity.y, stateMachine.ReusableData.TimeToReachTargetRotation.y - stateMachine.ReusableData.DampedTargetRotationPassedTime.y);
-
-            //stateMachine.ReusableData.DampedTargetRotationPassedTime.y += Time.deltaTime;
-            //float smoothedYAngle = Mathf.Lerp(currentYAngle,directionYAngle,5f*Time.deltaTime);
-            float smoothedYAngle = Mathf.SmoothDampAngle(currentYAngle, directionYAngle, ref turnSmoothVelocity, 5f * Time.deltaTime);
+            
+            float smoothedYAngle = Mathf.SmoothDampAngle(currentYAngle, directionYAngle, ref stateMachine.movementStateMachine.ReusableData.DampedTargetRotationCurrentVelocity.y, Time.deltaTime*10f);
             Quaternion targetRotation = Quaternion.Euler(0f, smoothedYAngle, 0f);
 
             stateMachine.Player.Rigidbody.rotation = targetRotation;
         }
-        private float GetDirectionAngle(Vector3 direction)
-        {
-            float directionAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-
-            if (directionAngle < 0f)
-            {
-                directionAngle += 360f;
-            }
-
-            return directionAngle;
-        }
+       
         
     }
 }

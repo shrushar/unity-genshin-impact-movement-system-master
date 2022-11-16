@@ -5,6 +5,7 @@ namespace GenshinImpactMovementSystem
 {
     public class PlayerGroundedState : PlayerMovementState
     {
+        
         public PlayerGroundedState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
         }
@@ -15,6 +16,7 @@ namespace GenshinImpactMovementSystem
 
             StartAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
             stateMachine.ReusableData.CurrentVerticalVelocity = Vector3.zero;
+            
 
             UpdateShouldSprintState();
 
@@ -32,7 +34,10 @@ namespace GenshinImpactMovementSystem
         {
             base.PhysicsUpdate();
 
-            Float();
+            if (!stateMachine.ReusableData.ShouldTeleport)
+                Float();
+            else
+                UpdateCameraRecenteringState(new Vector2(stateMachine.Player.Rigidbody.velocity.x, stateMachine.Player.Rigidbody.velocity.z));
         }
 
         private void UpdateShouldSprintState()
@@ -126,6 +131,7 @@ namespace GenshinImpactMovementSystem
         }
         protected virtual void OnMove()
         {
+            
             if (stateMachine.ReusableData.ShouldSprint)
             {
                 stateMachine.ChangeState(stateMachine.SprintingState);

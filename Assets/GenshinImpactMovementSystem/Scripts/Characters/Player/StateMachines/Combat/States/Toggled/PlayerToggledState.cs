@@ -41,7 +41,7 @@ namespace GenshinImpactMovementSystem
             Debug.Log("Stop looking on target");
             stateMachine.InteractiveAnimation.HardSet(stateMachine.Player.targetFollowTrigger, false);
             RemoveInputActionsCallbacks();
-            targetCamera.VirtualCamera.Priority = 1;
+            //targetCamera.VirtualCamera.Priority = 1;
 
             
         }
@@ -75,7 +75,7 @@ namespace GenshinImpactMovementSystem
         }
         protected override void RemoveInputActionsCallbacks()
         {
-            stateMachine.Player.Input.PlayerActions.LookOnTarget.canceled -= LookOnTargetCanceled;
+            //stateMachine.Player.Input.PlayerActions.LookOnTarget.canceled -= LookOnTargetCanceled;
             stateMachine.Player.Input.PlayerActions.DashToTarget.started -= DashToTarget_started;
         }
 

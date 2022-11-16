@@ -28,6 +28,9 @@ namespace GenshinImpactMovementSystem
         [SerializeField] private string fallParameterName = "isFalling";
         [SerializeField] private string sJumpParameterName = "is2ndJump";
 
+        [Header("Combat State Names")]
+        [SerializeField] private string isTeleportingName = "isTeleporting";
+
         public int GroundedParameterHash { get; private set; }
         public int MovingParameterHash { get; private set; }
         public int StoppingParameterHash { get; private set; }
@@ -46,6 +49,8 @@ namespace GenshinImpactMovementSystem
 
         public int FallParameterHash { get; private set; }
         public int SJumpParameterHash { get; private set; }
+
+        public int TeleportingHash { get; private set; }
 
         public void Initialize()
         {
@@ -67,6 +72,8 @@ namespace GenshinImpactMovementSystem
 
             FallParameterHash = Animator.StringToHash(fallParameterName);
             SJumpParameterHash = Animator.StringToHash(sJumpParameterName);
+
+            TeleportingHash = Animator.StringToHash(isTeleportingName);
         }
     }
 }

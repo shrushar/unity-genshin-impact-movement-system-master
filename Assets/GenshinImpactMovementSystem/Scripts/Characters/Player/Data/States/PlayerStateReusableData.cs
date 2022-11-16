@@ -19,6 +19,8 @@ namespace GenshinImpactMovementSystem
 
         public bool ShouldJump { get; set; }
 
+        public bool ShouldTeleport { get; set; }
+
         private Vector3 currentTargetRotation;
         private Vector3 timeToReachTargetRotation;
         private Vector3 dampedTargetRotationCurrentVelocity;

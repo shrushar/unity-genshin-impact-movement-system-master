@@ -10,6 +10,8 @@ namespace GenshinImpactMovementSystem
         public PlayerCombatStateMachine stateMachine;
         public FindTheNearestTarget findTheNearestTarget;
 
+
+
         public GameObject Target;
 
         
@@ -55,7 +57,15 @@ namespace GenshinImpactMovementSystem
         {
             throw new System.NotImplementedException();
         }
+        protected void StartAnimation(int animationHash)
+        {
+            stateMachine.Player.Animator.SetBool(animationHash, true);
+        }
 
+        protected void StopAnimation(int animationHash)
+        {
+            stateMachine.Player.Animator.SetBool(animationHash, false);
+        }
         public void OnTriggerEnter(Collider collider)
         {
             
@@ -95,18 +105,19 @@ namespace GenshinImpactMovementSystem
 
         protected virtual void LookOnTargetCanceled(InputAction.CallbackContext context)
         {
-            /*PlayerCameraRecenteringUtility targetCamera = stateMachine.Player.CameraTargetRecenteringUtility;
-            targetCamera.VirtualCamera.Priority = 1;*/
+            PlayerCameraRecenteringUtility targetCamera = stateMachine.Player.CameraTargetRecenteringUtility;
+            targetCamera.VirtualCamera.Priority = 1;
         }
         
         public void DashToTarget_started(InputAction.CallbackContext context)
         {
+            
             stateMachine.ChangeState(stateMachine.TeleportState);
         }
         protected virtual void RemoveInputActionsCallbacks()
         {
             stateMachine.Player.Input.PlayerActions.LookOnTarget.started -= OnLookOnTarget;
-            stateMachine.Player.Input.PlayerActions.LookOnTarget.canceled -= LookOnTargetCanceled;
+            //stateMachine.Player.Input.PlayerActions.LookOnTarget.canceled -= LookOnTargetCanceled;
         }
 
         protected virtual void OnLookOnTarget(InputAction.CallbackContext context)
