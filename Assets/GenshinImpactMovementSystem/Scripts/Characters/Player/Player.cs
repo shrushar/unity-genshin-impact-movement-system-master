@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -120,5 +121,11 @@ namespace GenshinImpactMovementSystem
         {
             movementStateMachine.OnAnimationTransitionEvent();
         }
+        /*private void OnDrawGizmos()
+        {
+            Vector3 targetProjection = new Vector3(targetPivot.transform.position.x, 0, targetPivot.transform.position.z);
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(Rigidbody.position, targetProjection);
+        }*/
     }
 }

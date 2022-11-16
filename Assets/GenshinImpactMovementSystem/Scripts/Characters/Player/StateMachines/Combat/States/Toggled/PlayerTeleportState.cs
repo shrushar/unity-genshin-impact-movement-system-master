@@ -11,17 +11,20 @@ namespace GenshinImpactMovementSystem
         float buffer;
         float bufferElypsed;
 
+        float turnSmoothVelocity;
+
+
 
         [SerializeField] private bool _loop;
         public PlayerTeleportState(PlayerCombatStateMachine playerCombatStateMachine) : base(playerCombatStateMachine)
         {
         }
 
-       //turn to target
-       //get direction to target
-       //with a distence to a tsrget apply forse mode
-       // apply to a rigid body with forse
-        
+        //turn to target
+        //get direction to target
+        //with a distence to a tsrget apply forse mode
+        // apply to a rigid body with forse
+
         public override void Exit()
         {
             Debug.Log("Stop teleporting");
@@ -50,16 +53,28 @@ namespace GenshinImpactMovementSystem
                 stateMachine.ChangeState(stateMachine.CombatState);*/
             base.Update();
 
-            
+
         }
         public override void PhysicsUpdate()
         {
+            RotateTowardsTargetRotation();
+            DashToTarget();
+
+
+
+
+            base.PhysicsUpdate();
+        }
+        
+        private void DashToTarget()
+        {
+
 
             Vector3 lastPosition = stateMachine.Player.Rigidbody.position;
 
             bool distReached = Vector3.Distance(lastPosition, stateMachine.Player.targetPivot.transform.position) < 1f;
             bool isTargetInAir = stateMachine.Player.targetPivot.transform.position.y > lastPosition.y;
-            
+
             Vector3 newPos = Vector3.MoveTowards(lastPosition, stateMachine.Player.targetPivot.transform.position, 5f * Time.deltaTime);
 
             stateMachine.Player.Rigidbody.velocity = (newPos - lastPosition) / Time.deltaTime;
@@ -67,50 +82,32 @@ namespace GenshinImpactMovementSystem
             if (distReached)
                 if (isTargetInAir)
                     stateMachine.movementStateMachine.ChangeState(stateMachine.movementStateMachine.FallingState);
-                else 
+                else
                     stateMachine.ChangeState(stateMachine.CombatState);
-                        
 
 
-            
-            base.PhysicsUpdate();
         }
-        
-        private void DashToTarget()
+       
+        protected void RotateTowardsTargetRotation()
         {
-            /*Vector3 dashDirection = stateMachine.Player.Rigidbody.transform.forward;
-            stateMachine.Player.Rigidbody.velocity = Vector3.zero;
-
-            dashDirection.y = 0f;
-
-            UpdateTargetRotation(dashDirection, false);
-
-            if (stateMachine.ReusableData.MovementInput != Vector2.zero)
+            float currentYAngle = stateMachine.Player.Rigidbody.rotation.eulerAngles.y;
+            Vector3 direction = ( stateMachine.Player.targetPivot.transform.position - stateMachine.Player.Rigidbody.position);
+            direction.y = 0;
+            float directionYAngle = Mathf.Atan2(direction.x,direction.z)*Mathf.Rad2Deg;
+            if (directionYAngle < 0f)
             {
-                UpdateTargetRotation(GetMovementInputDirection());
-
-                dashDirection = GetTargetRotationDirection(stateMachine.ReusableData.CurrentTargetRotation.y);
+                directionYAngle += 360f;
             }
-            dashBufferEvalute += Time.deltaTime / dashBuffer;
-            float movementSpeed = GetMovementSpeed(false) * stateMachine.Player.Data.GroundedData.DashData.DashAcceleration.Evaluate(dashBuffer);
-            stateMachine.Player.Rigidbody.velocity = dashDirection * movementSpeed;*/
 
-            Vector3 teleportDirection = stateMachine.Player.Rigidbody.transform.forward;
-            stateMachine.Player.Rigidbody.velocity = Vector3.zero;
-            teleportDirection = Vector3.MoveTowards(stateMachine.Player.Rigidbody.transform.position, Target.transform.position, 10f*Time.deltaTime);
 
-            
+            // float smoothedYAngle = Mathf.SmoothDampAngle(currentYAngle, , ref stateMachine.ReusableData.DampedTargetRotationCurrentVelocity.y, stateMachine.ReusableData.TimeToReachTargetRotation.y - stateMachine.ReusableData.DampedTargetRotationPassedTime.y);
 
-            
-        }
+            //stateMachine.ReusableData.DampedTargetRotationPassedTime.y += Time.deltaTime;
+            //float smoothedYAngle = Mathf.Lerp(currentYAngle,directionYAngle,5f*Time.deltaTime);
+            float smoothedYAngle = Mathf.SmoothDampAngle(currentYAngle, directionYAngle, ref turnSmoothVelocity, 5f * Time.deltaTime);
+            Quaternion targetRotation = Quaternion.Euler(0f, smoothedYAngle, 0f);
 
-        protected float UpdateTargetRotation(Vector3 direction) 
-        {
-            float directionAngle = GetDirectionAngle(direction);
-
-            //UpdateTargetRotationData(directionAngle);
-
-            return directionAngle;
+            stateMachine.Player.Rigidbody.rotation = targetRotation;
         }
         private float GetDirectionAngle(Vector3 direction)
         {
@@ -123,5 +120,6 @@ namespace GenshinImpactMovementSystem
 
             return directionAngle;
         }
+        
     }
 }
