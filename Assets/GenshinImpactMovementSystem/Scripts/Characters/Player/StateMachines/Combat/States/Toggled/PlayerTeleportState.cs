@@ -27,7 +27,7 @@ namespace GenshinImpactMovementSystem
 
         public override void Exit()
         {
-            Debug.Log("Stop teleporting");
+            
             stateMachine.Player.Input.PlayerActions.Movement.Enable();
             stateMachine.Player.Input.PlayerActions.Jump.Enable();
 
@@ -40,7 +40,7 @@ namespace GenshinImpactMovementSystem
         }
         public override void Enter()
         {
-            Debug.Log("Im teleporting");
+            
             StopAnimation(stateMachine.Player.AnimationData.GroundedParameterHash);
             StopAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
             StartAnimation(stateMachine.Player.AnimationData.TeleportingHash);

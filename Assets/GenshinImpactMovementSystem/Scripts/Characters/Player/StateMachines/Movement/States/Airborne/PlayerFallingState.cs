@@ -17,7 +17,7 @@ namespace GenshinImpactMovementSystem
         public override void Enter()
         {
             base.Enter();
-
+            
             //StopAnimation(stateMachine.Player.AnimationData.SJumpParameterHash);
             StartAnimation(stateMachine.Player.AnimationData.FallParameterHash);
 
@@ -52,12 +52,14 @@ namespace GenshinImpactMovementSystem
         {
             Vector3 gravity = Vector3.zero;
             Vector3 lastVelocity = stateMachine.Player.Rigidbody.velocity;
+            canMove = GetMovementInputDirection() == Vector3.zero;
+            stateMachine.Player.Data.AirborneData.JumpData.canMove = canMove;
 
             Vector3 jumpVelocityChange;
-            if (GetMovementInputDirection() == Vector3.zero || characterJumpInformation.canMove)
+            if (!canMove)
             {
                 
-                lastVelocity = new Vector3 (lastVelocity.x/3, lastVelocity.y, lastVelocity.z/3);
+                lastVelocity = new Vector3 (lastVelocity.x/3f, lastVelocity.y, lastVelocity.z/3f);
             }
             if (lastVelocity.y > -airborneData.FallData.FallSpeedLimit)
                 gravity = Vector3.down * stateMachine.Player.Data.AirborneData.FallData.Gravity * stateMachine.Player.Data.AirborneData.FallData.GravityMultiplayer * Time.deltaTime;

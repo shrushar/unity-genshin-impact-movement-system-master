@@ -21,7 +21,7 @@ namespace GenshinImpactMovementSystem
         [field: SerializeField][field: Range(1, 3)] public int JumpsCount { get; private set; } = 2;
 
         [field: SerializeField] public float jumpHeight { get; private set; } = 2f;
-        [field: SerializeField] public float jumpBuffer { get; private set; } = 2f;
+        [field: SerializeField] public float speed { get; private set; } = 2f;
 
         [field: SerializeField] public bool canMove { get; set; } = false;
     }

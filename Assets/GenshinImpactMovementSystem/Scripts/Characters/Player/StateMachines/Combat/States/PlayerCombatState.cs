@@ -24,14 +24,14 @@ namespace GenshinImpactMovementSystem
         }
         public virtual void Enter()
         {
-            Debug.Log("In Combat");
+            
             
             AddInputActionsCallbacks();
         }
 
         public virtual void Exit()
         {
-            Debug.Log("Out of Combat");
+            
             RemoveInputActionsCallbacks();
         }
         public virtual void Update()

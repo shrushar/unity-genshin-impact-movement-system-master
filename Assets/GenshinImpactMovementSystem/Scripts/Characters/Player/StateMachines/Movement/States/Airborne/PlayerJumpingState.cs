@@ -25,13 +25,15 @@ namespace GenshinImpactMovementSystem
         public override void Enter()
         {
             base.Enter();
-
-            //speed = stateMachine.ReusableData.MovementSpeedModifier / 2f;
+            Debug.Log("StartJump)");
+            stateMachine.Player.Input.PlayerActions.Movement.Enable();
+            speed = stateMachine.ReusableData.MovementSpeedModifier / 2f;
             if (speed == 0)
             {
-                speed = 1f;
+                speed = 3f;
             }
-            stateMachine.ReusableData.MovementSpeedModifier = speed;
+            
+            //stateMachine.ReusableData.MovementSpeedModifier = speed;
             
             animationCurve = stateMachine.Player.Data.AirborneData.JumpData.JumpHeightAcceliration;
 
@@ -45,11 +47,14 @@ namespace GenshinImpactMovementSystem
             canMove = GetMovementInputDirection() == Vector3.zero;
             stateMachine.Player.Data.AirborneData.JumpData.canMove = canMove; 
 
-            jumpBuffer = stateMachine.Player.Data.AirborneData.JumpData.jumpBuffer;
+            speed = stateMachine.Player.Data.AirborneData.JumpData.speed;
+            
             height = stateMachine.Player.Data.AirborneData.JumpData.jumpHeight;
+            //jumpBuffer = height / speed;
             jumpBufferElipsedTime = 0f;
+            //speed = height/jumpBuffer;
 
-
+            speed = stateMachine.Player.Data.AirborneData.JumpData.speed;
 
             startJump();
         }
@@ -67,8 +72,10 @@ namespace GenshinImpactMovementSystem
         public override void Update()
         {
             base.Update();
-            stateMachine.Player.Input.PlayerActions.Movement.Enable();
-            bool isBufferExpired = jumpBufferElipsedTime < characterJumpInformation.jumpBuffer;
+            canMove = GetMovementInputDirection() == Vector3.zero;
+            stateMachine.Player.Data.AirborneData.JumpData.canMove = canMove;
+
+            bool isBufferExpired = jumpBufferElipsedTime < 1;
 
 
             if (!isBufferExpired)
@@ -83,8 +90,9 @@ namespace GenshinImpactMovementSystem
 
         public override void PhysicsUpdate()
         {
-            
+               
             base.PhysicsUpdate();
+            
             startJump();
 
             if (shouldKeepRotating)
@@ -101,17 +109,17 @@ namespace GenshinImpactMovementSystem
             
                 lastVelocity = stateMachine.Player.Rigidbody.velocity;
 
-                jumpBufferElipsedTime += Time.deltaTime;
-                float progress = jumpBufferElipsedTime / characterJumpInformation.jumpBuffer * characterJumpInformation.speed;
+                jumpBufferElipsedTime += Time.deltaTime*speed/2f;
+                
                 Vector3 newVelocity;
-                if (!characterJumpInformation.canMove)
+                if (!canMove)
                 {
                     newVelocity = 
-                    new Vector3(lastVelocity.x/1.2f, characterJumpInformation.animationCurve.Evaluate(progress) * characterJumpInformation.height, lastVelocity.z/1.2f);
+                    new Vector3(lastVelocity.x/2f, animationCurve.Evaluate(jumpBufferElipsedTime) * height, lastVelocity.z/2f);
                 } else
                 {
                     newVelocity = 
-                    new Vector3(0f, characterJumpInformation.animationCurve.Evaluate(progress) * characterJumpInformation.height, 0f);
+                    new Vector3(0f, animationCurve.Evaluate(jumpBufferElipsedTime) *height, 0f);
                 }
                 
                 stateMachine.ReusableData.CurrentVerticalVelocity = newVelocity;
@@ -159,9 +167,9 @@ namespace GenshinImpactMovementSystem
         {
         }
 
-        protected override void OnMovementCanceled(InputAction.CallbackContext context)
+        /*protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
-        }
+        }*/
         
     }
 }

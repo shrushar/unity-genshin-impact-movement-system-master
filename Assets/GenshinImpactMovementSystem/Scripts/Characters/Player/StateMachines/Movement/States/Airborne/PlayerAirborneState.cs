@@ -10,7 +10,7 @@ namespace GenshinImpactMovementSystem
         public bool jumpIsQueded = true;
         public int jumpQue;
         private int jumpQueueLimit;
-        public CharacterJumpInformation characterJumpInformation;
+        //public CharacterJumpInformation characterJumpInformation;
 
         public PlayerAirborneState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
         {
@@ -22,17 +22,18 @@ namespace GenshinImpactMovementSystem
             StartAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
             jumpQueueLimit = airborneData.JumpData.JumpsCount;
             stateMachine.ReusableData.ShouldJump = true;
-            characterJumpInformation = new CharacterJumpInformation()
+            /*characterJumpInformation = new CharacterJumpInformation()
             {
 
-                speed = (stateMachine.ReusableData.MovementSpeedModifier != 0)?stateMachine.ReusableData.MovementSpeedModifier / 2f: 1f,
+                //speed = (stateMachine.ReusableData.MovementSpeedModifier != 0) ? stateMachine.ReusableData.MovementSpeedModifier / 1.5f : 3f,
+                speed = 5f,
                 animationCurve = stateMachine.Player.Data.AirborneData.JumpData.JumpHeightAcceliration,
                 height = stateMachine.Player.Data.AirborneData.JumpData.jumpHeight,
-                jumpBuffer = stateMachine.Player.Data.AirborneData.JumpData.jumpBuffer,
+                jumpBuffer = characterJumpInformation.height/characterJumpInformation.speed,
                 canMove = GetMovementInputDirection() == Vector3.zero,
                 PlayerAnimationDataHash = stateMachine.Player.AnimationData.AirborneParameterHash
 
-            };
+            };*/
 
 
 
@@ -44,10 +45,11 @@ namespace GenshinImpactMovementSystem
             base.Exit();
             StopAnimation(stateMachine.Player.AnimationData.AirborneParameterHash);
             
+            
 
 
         }
-
+        
         protected virtual void ResetSprintState()
         {
 
@@ -90,15 +92,15 @@ namespace GenshinImpactMovementSystem
                 
                 if (jumpQue > 0)
                 {
-                    characterJumpInformation = new CharacterJumpInformation()
+                    /*characterJumpInformation = new CharacterJumpInformation()
                     {
                         speed = (characterJumpInformation.speed == 0) ? characterJumpInformation.speed = 3f : characterJumpInformation.speed * 1.5f,
                         animationCurve = stateMachine.Player.Data.AirborneData.JumpData.JumpHeightAcceliration,
                         height = stateMachine.Player.Data.AirborneData.JumpData.jumpHeight * 3f,
                         jumpBuffer = stateMachine.Player.Data.AirborneData.JumpData.jumpBuffer,
-                        canMove = GetMovementInputDirection() == Vector3.zero,
+                        canMove = true,
                         PlayerAnimationDataHash = stateMachine.Player.AnimationData.SJumpParameterHash
-                    };
+                    };*/
                     StartAnimation(stateMachine.Player.AnimationData.SJumpParameterHash);
                 }else
                 {

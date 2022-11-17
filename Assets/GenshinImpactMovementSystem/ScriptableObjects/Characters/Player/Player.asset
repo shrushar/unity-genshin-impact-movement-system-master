@@ -269,10 +269,10 @@ MonoBehaviour:
       <DecelerationForce>k__BackingField: 0
       <JumpsCount>k__BackingField: 2
       <jumpHeight>k__BackingField: 5
-      <jumpBuffer>k__BackingField: 0.2
+      <speed>k__BackingField: 5
       <canMove>k__BackingField: 0
     <FallData>k__BackingField:
       <FallSpeedLimit>k__BackingField: 10
       <MinimumDistanceToBeConsideredHardFall>k__BackingField: 100
       <Gravity>k__BackingField: 10
-      <GravityMultiplayer>k__BackingField: 1
+      <GravityMultiplayer>k__BackingField: 1.5
