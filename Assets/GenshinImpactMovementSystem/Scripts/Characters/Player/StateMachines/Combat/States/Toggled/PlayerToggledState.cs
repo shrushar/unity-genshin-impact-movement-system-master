@@ -48,13 +48,14 @@ namespace GenshinImpactMovementSystem
         public override void Update()
         {
             base.Update();
-            
+            stateMachine.Player.setTarget.AddTarget(Target);
             if (stateMachine.Player.targets.Count == 0)
                 Exit();
             if (!stateMachine.Player.Input.PlayerActions.LookOnTarget.IsPressed())
                 if (Target != null)
                     stateMachine.ChangeState(stateMachine.CombatState);
-                
+            
+           
             //if (!stateMachine.Player.Input.PlayerActions.LookOnTarget.IsPressed())
 
 

@@ -15,8 +15,8 @@ TagManager:
   - Water
   - UI
   - Target
-  - 
-  - 
+  - Player
+  - Collectable
   - 
   - 
   - 
@@ -33,7 +33,7 @@ TagManager:
   - Environment
   - GroundCheck
   - EnemyCheck
-  - 
+  - PP
   - 
   - 
   - 

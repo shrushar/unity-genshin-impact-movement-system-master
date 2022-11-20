@@ -25,7 +25,6 @@ namespace GenshinImpactMovementSystem
         public override void Enter()
         {
             base.Enter();
-            Debug.Log("StartJump)");
             stateMachine.Player.Input.PlayerActions.Movement.Enable();
             speed = stateMachine.ReusableData.MovementSpeedModifier / 2f;
             if (speed == 0)

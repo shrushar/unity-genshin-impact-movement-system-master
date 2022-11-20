@@ -56,6 +56,7 @@ namespace GenshinImpactMovementSystem
             //DashToTarget();
 
         }
+        
         public override void Update()
         {
             stateMachine.Player.setTarget.AddTarget(Target);
@@ -82,9 +83,10 @@ namespace GenshinImpactMovementSystem
             Vector3 lastPosition = stateMachine.Player.Rigidbody.position;
 
             bool distReached = Vector3.Distance(lastPosition, stateMachine.Player.targetPivot.transform.position) < 1f;
+            //bool distReached = Vector3.Distance(lastPosition, stateMachine.Player.targetPivot.transform.position) < 0.1f;
             bool isTargetInAir = stateMachine.Player.targetPivot.transform.position.y > lastPosition.y;
 
-            Vector3 direction = Vector3.MoveTowards(lastPosition, stateMachine.Player.targetPivot.transform.position, 5f * Time.deltaTime);
+            Vector3 direction = Vector3.MoveTowards(lastPosition, stateMachine.Player.targetPivot.transform.position, 8f * Time.deltaTime);
             //Vector3 direction = (stateMachine.Player.targetPivot.transform.position - stateMachine.Player.Rigidbody.position);
             stateMachine.Player.Rigidbody.velocity = (direction - lastPosition) / Time.deltaTime;
             stateMachine.Player.Rigidbody.MovePosition(direction);

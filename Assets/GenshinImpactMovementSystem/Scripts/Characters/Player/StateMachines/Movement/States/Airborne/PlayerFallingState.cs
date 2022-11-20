@@ -59,7 +59,7 @@ namespace GenshinImpactMovementSystem
             if (!canMove)
             {
                 
-                lastVelocity = new Vector3 (lastVelocity.x/3f, lastVelocity.y, lastVelocity.z/3f);
+                lastVelocity = new Vector3 (lastVelocity.x/1.5f, lastVelocity.y, lastVelocity.z/1.5f);
             }
             if (lastVelocity.y > -airborneData.FallData.FallSpeedLimit)
                 gravity = Vector3.down * stateMachine.Player.Data.AirborneData.FallData.Gravity * stateMachine.Player.Data.AirborneData.FallData.GravityMultiplayer * Time.deltaTime;

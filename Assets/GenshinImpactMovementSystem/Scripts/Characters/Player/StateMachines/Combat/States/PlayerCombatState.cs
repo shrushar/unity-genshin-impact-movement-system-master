@@ -24,19 +24,21 @@ namespace GenshinImpactMovementSystem
         }
         public virtual void Enter()
         {
-            
-            
+            Debug.Log("In combat");
+            //stateMachine.Player.targets.Clear();
             AddInputActionsCallbacks();
         }
 
         public virtual void Exit()
         {
-            
+            Debug.Log("Out of combat");
             RemoveInputActionsCallbacks();
         }
         public virtual void Update()
         {
+            stateMachine.Player.targets.Remove(stateMachine.Player.targets.Find(p => p.activeSelf == false));
             stateMachine.InteractiveAnimation.ManualUpdate(stateMachine.Player.targetFollowTrigger);
+            
         }
         public void HandleInput()
         {
@@ -82,13 +84,14 @@ namespace GenshinImpactMovementSystem
             
             if (stateMachine.Player.LayerData.IsEnemyLayer(collider.gameObject.layer))
             {
-                stateMachine.Player.targets.Remove(collider.gameObject);
+                 stateMachine.Player.targets.Remove(collider.gameObject);
                 return;
             }
         }
+
         public void OnTriggerStay(Collider collider)
         {
-
+            
         }
         public virtual void PhysicsUpdate()
         {

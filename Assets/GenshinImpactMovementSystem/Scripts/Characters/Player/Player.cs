@@ -105,7 +105,7 @@ namespace GenshinImpactMovementSystem
         }
         private void OnTriggerStay(Collider collider)
         {
-            //combatStateMachine.OnTriggerStay(collider);
+            combatStateMachine.OnTriggerStay(collider);
         }
         public void OnMovementStateAnimationEnterEvent()
         {
