@@ -7,6 +7,8 @@ TagManager:
   - EnemyCheck
   - GroundCheck
   - Target
+  - FxTemporaire
+  - Bot
   layers:
   - Default
   - TransparentFX

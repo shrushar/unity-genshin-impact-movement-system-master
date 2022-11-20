@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.Events;
 
 namespace GenshinImpactMovementSystem
 {
@@ -9,6 +11,9 @@ namespace GenshinImpactMovementSystem
     [RequireComponent(typeof(PlayerResizableCapsuleCollider))]
     public class Player : MonoBehaviour
     {
+
+        public static event Action StartDialogue;
+
         [field: Header("References")]
         [field: SerializeField] public PlayerSO Data { get; private set; }
 
@@ -94,6 +99,8 @@ namespace GenshinImpactMovementSystem
 
         private void OnTriggerEnter(Collider collider)
         {
+            if (collider.tag == "Bot")
+                StartDialogue?.Invoke();
             movementStateMachine.OnTriggerEnter(collider);
             combatStateMachine.OnTriggerEnter(collider);
         }
