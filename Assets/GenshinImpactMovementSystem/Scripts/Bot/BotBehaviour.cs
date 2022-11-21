@@ -9,21 +9,23 @@ namespace GenshinImpactMovementSystem
 {
     public class BotBehaviour : MonoBehaviour
     {
-        
 
 
+        [SerializeField] GameObject _cutsene;
         [SerializeField] Transform[] _wayPoints;
 
         private int _currentWayPoint = 0;
         private NavMeshAgent agent;
 
-        public bool IsLoop;
+        public bool cusIsActive;
 
         
 
         private void Start()
         {
             agent = GetComponent<NavMeshAgent>();
+
+            _cutsene.SetActive(false);
 
             agent.autoBraking = false;
 
@@ -34,7 +36,8 @@ namespace GenshinImpactMovementSystem
         void Update()
         {
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
-                GotoNextPoint();
+                if(!cusIsActive)
+                    GotoNextPoint();
         }
 
         private void GotoNextPoint()
@@ -52,7 +55,11 @@ namespace GenshinImpactMovementSystem
 
         public void OnTriggerEnter(Collider collider)
         {
-            
+            if(collider.tag == "Player")
+            {
+                _cutsene.SetActive(true);
+                cusIsActive = true;
+            }
         }
     }
 }
