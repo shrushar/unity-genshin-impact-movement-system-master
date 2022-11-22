@@ -15,5 +15,6 @@ namespace GenshinImpactMovementSystem
         public void OnAnimationEnterEvent();
         public void OnAnimationExitEvent();
         public void OnAnimationTransitionEvent();
+        
     }
 }

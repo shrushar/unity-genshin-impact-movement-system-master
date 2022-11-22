@@ -123,7 +123,7 @@ namespace GenshinImpactMovementSystem
                 
                 stateMachine.ReusableData.CurrentVerticalVelocity = newVelocity;
 
-                //newVelocity = GetJumpForceOnSlope(newVelocity);
+                newVelocity = GetJumpForceOnSlope(newVelocity);
 
                 stateMachine.Player.Rigidbody.velocity = newVelocity;
 
@@ -160,15 +160,18 @@ namespace GenshinImpactMovementSystem
             return jumpForce;
         }
 
-          
-        
+        public override void OnAnimationEnterEvent()
+        {
+            Debug.Log("PlaySound");
+        }
+
         protected override void ResetSprintState()
         {
         }
 
-        /*protected override void OnMovementCanceled(InputAction.CallbackContext context)
+        protected override void OnMovementCanceled(InputAction.CallbackContext context)
         {
-        }*/
-        
+
+        }
     }
 }

@@ -58,5 +58,6 @@ namespace GenshinImpactMovementSystem
         {
             currentState?.OnAnimationTransitionEvent();
         }
+        
     }
 }

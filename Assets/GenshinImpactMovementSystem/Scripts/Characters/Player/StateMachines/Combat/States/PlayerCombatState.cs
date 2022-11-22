@@ -129,5 +129,9 @@ namespace GenshinImpactMovementSystem
                     stateMachine.ChangeState(stateMachine.ToggledState);
         }
 
+        public void OnAnimationPlayClip()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -115,6 +115,7 @@ namespace GenshinImpactMovementSystem
         {
             StopAnimation(stateMachine.Player.AnimationData.SJumpParameterHash);
         }
+        
         public struct CharacterJumpInformation
         {
             public float speed;
@@ -126,5 +127,6 @@ namespace GenshinImpactMovementSystem
             public int PlayerAnimationDataHash;
         }
         #endregion
+        
     }
 }
