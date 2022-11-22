@@ -23,13 +23,17 @@ namespace GenshinImpactMovementSystem
         [field: Header("Camera")]
         [field: SerializeField] public PlayerCameraRecenteringUtility CameraRecenteringUtility { get; private set; }
         [field: SerializeField] public PlayerCameraRecenteringUtility CameraTargetRecenteringUtility { get; private set; }
+        
 
         [field: Header("Animations")]
         [field: SerializeField] public PlayerAnimationData AnimationData { get; private set; }
 
         [field: SerializeField] public InteractiveAnimationData interctiveAnimationData { get; private set; }
 
+        [field: Header("Sounds")]
         
+        [field: SerializeField] public AudioData audioData { get; private set; }
+
         public Rig targetFollowTrigger { get; private set; }
 
 

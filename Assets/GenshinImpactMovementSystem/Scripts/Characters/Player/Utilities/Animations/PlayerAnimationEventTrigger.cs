@@ -13,10 +13,10 @@ namespace GenshinImpactMovementSystem
 
         public void TriggerOnMovementStateAnimationEnterEvent()
         {
-            if (IsInAnimationTransition())
+            /*if (IsInAnimationTransition())
             {
                 return;
-            }
+            }*/
 
             player.OnMovementStateAnimationEnterEvent();
         }

@@ -162,7 +162,8 @@ namespace GenshinImpactMovementSystem
 
         public override void OnAnimationEnterEvent()
         {
-            Debug.Log("PlaySound");
+            Debug.Log("In trigger");
+            stateMachine.Player.audioData.PlaySoundOnJump();
         }
 
         protected override void ResetSprintState()
