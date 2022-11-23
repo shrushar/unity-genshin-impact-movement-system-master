@@ -1,4 +1,5 @@
 using Cinemachine;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,10 +16,12 @@ namespace GenshinImpactMovementSystem
 
         [Tooltip("If you're using Cinemachine 2.8.4 or under, untick this option.\nIf unticked, both Look and Zoom will be disabled.")]
         [SerializeField] private bool fixedCinemachineVersion;
+        [SerializeField] private GameObject menuUI;
 
         private void Awake()
         {
             cameraToggleInputAction.action.started += OnCameraCursorToggled;
+            menuUI.SetActive(false);
 
             if (startHidden)
             {
@@ -38,7 +41,9 @@ namespace GenshinImpactMovementSystem
 
         private void OnCameraCursorToggled(InputAction.CallbackContext context)
         {
+           
             ToggleCursor();
+            PauseGame();
         }
 
         private void ToggleCursor()
@@ -80,6 +85,11 @@ namespace GenshinImpactMovementSystem
             {
                 inputProvider.ZAxis.action.Disable();
             }
+        }
+        private void PauseGame()
+        {
+            menuUI.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 }
