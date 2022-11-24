@@ -267,7 +267,7 @@ namespace GenshinImpactMovementSystem
                 {
                     ""name"": """",
                     ""id"": ""7476a130-e887-4a70-8ece-5094a7605971"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/leftAlt"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

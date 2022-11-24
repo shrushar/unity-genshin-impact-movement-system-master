@@ -42,8 +42,7 @@ namespace GenshinImpactMovementSystem
         private void OnCameraCursorToggled(InputAction.CallbackContext context)
         {
            
-            ToggleCursor();
-            PauseGame();
+            //ToggleCursor();
         }
 
         private void ToggleCursor()

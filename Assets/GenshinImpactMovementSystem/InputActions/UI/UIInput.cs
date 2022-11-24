@@ -72,7 +72,7 @@ public partial class @UIInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""db00ebcc-b8c8-4dc8-b989-2b7ae66e0e3f"",
-                    ""path"": ""<Keyboard>/escape"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
